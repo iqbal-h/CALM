@@ -362,15 +362,12 @@ def print_ipout_event(cpu, data, size):
     global fileTx
     global LOGSIZE
     global FILE_SIZE
-    # temp_milli = current_milli_time()
+
     event = ct.cast(data, ct.POINTER(Data_ipv4)).contents
-    # tdiff = current_milli_time() - temp_milli
-    # print (tdiff)
     if event.protocol == 1:
         daddr = inet_ntop(AF_INET, pack("I", event.daddr))
         saddr = inet_ntop(AF_INET, pack("I", event.saddr))
-        # val1 = str(current_milli_time())+" "+inet_ntop(AF_INET, pack("I", event.saddr))+" "+inet_ntop(AF_INET, pack("I", event.daddr))+" "+str(event.id)+" "+str(event.seqno)+" "+"ipout\n"
-        # temp_milli = current_milli_time()
+
         for ip in ip_list:
 
             if ip == daddr:
@@ -378,11 +375,11 @@ def print_ipout_event(cpu, data, size):
                 break
         temp_milli = int(round(time.time() * 1000000))
         tdiff = int(round(time.time() * 1000000)) - temp_milli
-        # print (tdiff)
+        
         if check == 1:
             val1 = str(event.tstamp/1000)+" "+str(event.tstampk)+" "+inet_ntop(AF_INET, pack("I", event.saddr))+" "+inet_ntop(AF_INET, pack("I", event.daddr))+" "+str(event.id)+" "+str(event.seqno)+"\n"
 
-            # print(val1)
+       
             tx_file_size = tx_file_size + len(val1)
             tx_list = tx_list + val1      
             tx_log_size += len(val1)
@@ -393,7 +390,7 @@ def print_ipout_event(cpu, data, size):
                 tx_log_size = 0
 
                 if tx_file_size > FILE_SIZE:
-                    # print(str(tx_file_size))
+                 
                     fileTx.close()
                     tx_file_size = 0
                     tx_file_counter += 1
@@ -405,7 +402,7 @@ def print_ipout_event(cpu, data, size):
 
 
 b = BPF(text=bpf_text)
-# print(header_string % ("PID", "COMM", "LADDR", "LPORT", "RADDR", "RPORT", "STATE"))
+
 
 header_string = "%-15s %-15s %-15s %-5s %-5s %-10s"
 
@@ -414,7 +411,7 @@ b["ipv4_icmprcv_event"].open_perf_buffer(print_icmp_rcv_event)
 b["ipv4_ipout_event"].open_perf_buffer(print_ipout_event) 
 
 signal.signal(signal.SIGINT, signal_handler)
-# signal.pause()
+
 print('Press Ctrl+C')
 while 1:
     b.kprobe_poll()
