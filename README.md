@@ -27,4 +27,4 @@ Once the desired number of pings are sent. Close the terminals sending the pings
 
 ## Dataset
 For understanding data, the sample dataset is available in folder _sample_dataset_.
-The complete dataset is publicly available [here](https://drive.google.com/drive/u/1/folders/1Bv3tpmZYglP-cM8_SVD2NYgAxp8wNGBd).
+The complete dataset is publicly available at [Kaggle](https://doi.org/10.34740/kaggle/dsv/15600175).
